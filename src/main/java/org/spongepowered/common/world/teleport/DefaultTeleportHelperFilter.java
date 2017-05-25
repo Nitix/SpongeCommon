@@ -34,7 +34,7 @@ import org.spongepowered.common.block.BlockUtil;
 
 import java.util.Set;
 
-public class DefaultTeleportHelperFilter implements TeleportHelperFilter {
+public class DefaultTeleportHelperFilter extends ConfigTeleportHelperFilter {
 
     // Materials it is NOT safe to put players on top of.
     private static final Set<Material> NOT_SAFE_FLOOR = ImmutableSet.of(Material.AIR, Material.CACTUS, Material.FIRE, Material.LAVA);
@@ -51,7 +51,7 @@ public class DefaultTeleportHelperFilter implements TeleportHelperFilter {
 
     @Override
     public boolean isSafeFloorMaterial(BlockState blockState) {
-        return !NOT_SAFE_FLOOR.contains(BlockUtil.toNative(blockState).getMaterial());
+        return super.isSafeFloorMaterial(blockState) && !NOT_SAFE_FLOOR.contains(BlockUtil.toNative(blockState).getMaterial());
     }
 
     @Override
@@ -60,6 +60,7 @@ public class DefaultTeleportHelperFilter implements TeleportHelperFilter {
         Material material = state.getMaterial();
 
         // Also avoid slabs.
-        return !state.causesSuffocation() && material != Material.LAVA && !(state.getBlock() instanceof BlockSlab);
+        return super.isSafeFloorMaterial(blockState) &&
+                !state.causesSuffocation() && material != Material.LAVA && !(state.getBlock() instanceof BlockSlab);
     }
 }

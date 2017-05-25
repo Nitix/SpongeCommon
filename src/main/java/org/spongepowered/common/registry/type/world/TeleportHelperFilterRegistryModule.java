@@ -33,6 +33,7 @@ import org.spongepowered.api.registry.AdditionalCatalogRegistryModule;
 import org.spongepowered.api.registry.util.RegisterCatalog;
 import org.spongepowered.api.world.teleport.TeleportHelperFilter;
 import org.spongepowered.api.world.teleport.TeleportHelperFilters;
+import org.spongepowered.common.world.teleport.ConfigTeleportHelperFilter;
 import org.spongepowered.common.world.teleport.DefaultTeleportHelperFilter;
 import org.spongepowered.common.world.teleport.FlyingTeleportHelperFilter;
 import org.spongepowered.common.world.teleport.NoPortalTeleportHelperFilter;
@@ -70,6 +71,7 @@ public class TeleportHelperFilterRegistryModule implements AdditionalCatalogRegi
 
     @Override
     public void registerDefaults() {
+        this.filterMap.put("config", new ConfigTeleportHelperFilter());
         this.filterMap.put("default", new DefaultTeleportHelperFilter());
         this.filterMap.put("flying", new FlyingTeleportHelperFilter());
         this.filterMap.put("no_portal", new NoPortalTeleportHelperFilter());
